@@ -8,10 +8,6 @@
 - [Installation](#installation)
 - [Data](#data-preparation)
 - [Usage](#usage)
-- [Reproducing Results](#reproducing-results)
-- [Citation](#citation)
-- [License](#license)
-- [Contact](#contact)
 
 ## Installation
 ### Conda Environment Setup
@@ -39,4 +35,4 @@ Target: 1 Dimension
 Random Forest
 Neural Network
 SVR (RBF Kernel)
-Ridge R
+Ridge Regression
