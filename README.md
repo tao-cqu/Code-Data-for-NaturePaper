@@ -1,5 +1,5 @@
 # Code-Data-for-NaturePaper
-# Flux Assessment Model for Riverine Microplastics (FAMRM)
+# Flux Analysis Model for Riverine Microplastics (FLUX-MP)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
 > Machine learning models for predicting microplastic concentrations in river systems, including Random Forest, SVR, Neural Networks, and Ridge Regression.
