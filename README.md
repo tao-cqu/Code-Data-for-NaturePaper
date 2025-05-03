@@ -1,4 +1,4 @@
-# Code-Data-for-NaturePaper
+# Dual-phase reservoir retention governs riverine microplastic fluxes
 # Flux Analysis Model for Riverine Microplastics (FLUX-MP)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
@@ -26,6 +26,9 @@ dependencies:
     - joblib==1.1.0
     - openpyxl==3.0.9
 ## Data
+### Data
+Supplementary table-References.xlsx
+
 ### Input Format
 Features: 7 Dimensions for Non-buoyant MP , 5 Dimensions for Buoyant MP
 Target: 1 Dimension
