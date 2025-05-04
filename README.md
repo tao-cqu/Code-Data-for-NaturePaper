@@ -8,7 +8,7 @@
 - [Installation](#installation)
 - [Data](#data-preparation)
 - [Usage](#usage)
-- [Auxiliary](#Auxiliary time-recurrent neural network)
+- [Auxiliary](#Auxiliary_time_recurrent_neural_network)
 
 ## Installation
 ### Conda Environment Setup
