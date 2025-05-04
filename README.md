@@ -8,6 +8,7 @@
 - [Installation](#installation)
 - [Data](#data-preparation)
 - [Usage](#usage)
+- [Auxiliary](#Auxiliary time-recurrent neural network)
 
 ## Installation
 ### Conda Environment Setup
@@ -35,10 +36,13 @@ Target: 1 Dimension
 
 ## Usage
 ### Training Models
-Random Forest
+Random Forest(selected)
 Neural Network
 SVR (RBF Kernel)
 Ridge Regression
+
+## Auxiliary time-recurrent neural network
+Auxiliary_time_recurrent_neural_network_code.py
 
 # Dam-Reservoir System MP Retention ratio
 Matlab Code Dam-Reservoir System MP Retention ratio.txt
