@@ -1,0 +1,137 @@
+%Text 1 Code- Regression tree of nonlinear relation between MP Flux (X1), dam height (X2), reservoir capability (X3), hydraulic retention time (X4), and MPs retention ratio (Y).
+% Provided data
+X1 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X1');
+X2 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X2');
+X3 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X3');
+X4 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X4');
+
+% Convert tables to arrays and combine all independent variable sets into a single matrix X
+X = [table2array(X1), table2array(X2), table2array(X3), table2array(X4)];
+
+% Dependent variable (y)
+y = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'Y');
+y = table2array(y); % Convert dependent variable table to array
+
+% Split the dataset into training and testing sets (80% train, 20% test)
+train_ratio = 0.8;
+num_samples = size(X, 1);
+train_size = floor(train_ratio * num_samples);
+
+% Shuffle the data and split into training and testing sets
+rng(42); % Set random seed for reproducibility
+indices = randperm(num_samples);
+train_indices = indices(1:train_size);
+test_indices = indices(train_size+1:end);
+
+X_train = X(train_indices, :);
+y_train = y(train_indices);
+X_test = X(test_indices, :);
+y_test = y(test_indices);
+
+% Train a Random Forest model using TreeBagger (MATLAB's Random Forest implementation)
+num_trees = 100;  % Number of trees in the forest
+model = TreeBagger(num_trees, X_train, y_train, 'Method', 'regression', 'OOBPredictorImportance', 'on');
+
+% Make predictions on the test set
+y_pred = predict(model, X_test);
+y_pred = str2double(y_pred);  % Convert predictions from string to numeric
+
+% Evaluate the model (calculate Mean Squared Error and R-squared)
+mse = mean((y_test - y_pred).^2);  % Mean Squared Error (MSE)
+sstot = sum((y_test - mean(y_test)).^2);  % Total sum of squares
+ssres = sum((y_test - y_pred).^2);  % Residual sum of squares
+r2 = 1 - (ssres / sstot);  % R-squared
+
+% Display the results
+fprintf('Mean Squared Error: %.4f\n', mse);
+fprintf('R-squared: %.4f\n', r2);
+
+%% Feature Importance
+% Get feature importance from the model
+importance = model.OOBPermutedPredictorDeltaError;
+
+% Display feature importance
+disp('Feature Importance:');
+disp(importance);
+
+% Visualize the feature importance
+figure;
+bar(importance);
+xlabel('Feature Index');
+ylabel('Importance');
+title('Feature Importance in Random Forest');
+
+%% Visualizing One Tree in the Forest
+% Extracting and displaying the first tree from the Random Forest model
+tree = model.Trees{1};
+view(tree, 'Mode', 'graph');  % This visualizes the tree structure
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%Text 1 Code- Regression tree of nonlinear relation between dam height (X2), reservoir capability (X3), hydraulic retention time (X4), and MPs retention ratio (Y).
+% Provided data
+
+X2 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X2');
+X3 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X3');
+X4 = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'X4');
+
+% Convert tables to arrays and combine all independent variable sets into a single matrix X
+X = [table2array(X2), table2array(X3), table2array(X4)];
+
+% Dependent variable (y)
+y = readtable('E:\FLUX-MP\Retention.xlsx', 'Sheet', 'Y');
+y = table2array(y); % Convert dependent variable table to array
+
+% Split the dataset into training and testing sets (80% train, 20% test)
+train_ratio = 0.8;
+num_samples = size(X, 1);
+train_size = floor(train_ratio * num_samples);
+
+% Shuffle the data and split into training and testing sets rng(42); % Set random seed for reproducibility
+indices = randperm(num_samples);
+train_indices = indices(1:train_size);
+test_indices = indices(train_size+1:end);
+
+X_train = X(train_indices, :);
+y_train = y(train_indices);
+X_test = X(test_indices, :);
+y_test = y(test_indices);
+
+% Train a Random Forest model using TreeBagger (MATLAB's Random Forest implementation)
+num_trees = 100;  % Number of trees in the forest
+model = TreeBagger(num_trees, X_train, y_train, 'Method', 'regression', 'OOBPredictorImportance', 'on');
+
+% Make predictions on the test set
+y_pred = predict(model, X_test);
+
+% Evaluate the model (calculate Mean Squared Error and R-squared)
+y_pred = str2double(y_pred);  % Convert predictions from string to numeric
+mse = mean((y_test - y_pred).^2);  % Mean Squared Error (MSE)
+sstot = sum((y_test - mean(y_test)).^2);  % Total sum of squares
+ssres = sum((y_test - y_pred).^2);  % Residual sum of squares
+r2 = 1 - (ssres / sstot);  % R-squared
+
+% Display the results
+fprintf('Mean Squared Error: %.4f\n', mse);
+fprintf('R-squared: %.4f\n', r2);
+%% Feature Importance
+% Get feature importance from the model
+importance = model.OOBPermutedPredictorDeltaError;
+
+% Display feature importance
+disp('Feature Importance:');
+disp(importance);
+
+% Visualize the feature importance
+figure;
+bar(importance);
+xlabel('Feature Index');
+ylabel('Importance');
+title('Feature Importance in Random Forest');
+
+%% Visualizing One Tree in the Forest
+% Extracting and displaying the first tree from the Random Forest model
+tree = model.Trees{1};
+view(tree, 'Mode', 'graph');  % This visualizes the tree structure
+
+%% Extracting the Rules from a Single Decision Tree
+% View the rules in the first tree
+view(tree, 'Mode', 'text');  % This displays decision rules in text format
